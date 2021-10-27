@@ -1,0 +1,68 @@
+roslaunch turtlebot_gazebo turtlebot_world.launch
+roslaunch turtlebot_teleop keyboard_teleop.launch
+roslaunch turtlebot_gazebo gmapping_demo.launch
+roslaunch turtlebot_rviz_launchers view_navigation.launch
+
+<mesh filename="package://turtlebot_description/meshes/sensors/hokuyo.dae"/>     change to your own path   hokuyo.urdf.xacro
+
+#file:hokuyo.dae
+cd ~/.gazebo/models
+wget -q -R *index.html*,*.tar.gz --no-parent -r -x -nH http://models.gazebosim.org/hokuyo/
+
+#launch file
+roscd turtlebot_gazebo 
+cd launch
+/opt/ros/kinetic/share/turtlebot_gazebo/launch
+
+#launch
+/opt/ros/kinetic/share/turtlebot_gazebo/launch/includes
+sudo vi kobuki.launch.xml
+
+#launch
+/opt/ros/kinetic/share/turtlebot_description/robots
+sudo vi kobuki_hexagons_hokuyo.urdf.xacro
+
+#launch
+/opt/ros/kinetic/share/turtlebot_description/urdf
+sudo vi turtlebot_library.urdf.xacro
+
+#launch
+/opt/ros/kinetic/share/turtlebot_description/urdf/sensors
+sudo vi hokuyo.urdf.xacro
+
+#launch
+/opt/ros/kinetic/share/turtlebot_description/urdf
+sudo vi turtlebot_gazebo.urdf.xacro
+
+
+http://gazebosim.org/tutorials/?tut=add_laser
+cd ~/.gazebo/models
+wget -q -R *index.html*,*.tar.gz --no-parent -r -x -nH http://models.gazebosim.org/hokuyo/
+sun@sun:~/.gazebo/models$ ls
+cube_20k  ground_plane  jersey_barrier  pioneer2dx  willowgarage
+dumpster  hokuyo        my_robot        sun
+
+sun@sun:~/.gazebo/models$ cd hokuyo/
+sun@sun:~/.gazebo/models/hokuyo$ ls
+meshes  model-1_2.sdf  model-1_3.sdf  model-1_4.sdf  model.config  model.sdf
+
+sun@sun:~/.gazebo/models/hokuyo$ cd meshes/
+sun@sun:~/.gazebo/models/hokuyo/meshes$ ls
+hokuyo_convex.stl  hokuyo.dae
+
+
+
+#at last 
+#For gazebo 
+sudo vi .bashrc
+source /home/jk/ros_sim/devel/setup.bash
+export  TURTLEBOT_BASE=kobuki  
+export  TURTLEBOT_STACKS=hexagons
+export  TURTLEBOT_3D_SENSOR=KinectHokuyo
+
+# /scan               
+#normal
+roslaunch turtlebot_gazebo explorer.launch
+roslaunch turtlebot_teleop keyboard_teleop.launch
+roslaunch turtlebot_gazebo gmapping_demo.launch
+roslaunch turtlebot_rviz_launchers view_navigation.launch
